@@ -22,7 +22,7 @@ import sys
 
 # CONFIGURATION ───────────────────────────────────
 TARGET_URL = "https://sigmaseries.in/"          # ← REPLACE with your ngrok URL or local URL if tunneled
-CONCURRENCY = 100                                      # Start low (10–30), increase gradually
+CONCURRENCY = 15                                      # Start low (10–30), increase gradually
 REQUESTS_PER_WORKER = 200                              # Total requests ≈ CONCURRENCY × this
 TIMEOUT_SECONDS = 10                                   # Kill slow requests
 DELAY_BETWEEN_BATCHES = 0.0                            # 0 = max speed; increase to slow down
