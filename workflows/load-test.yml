@@ -1,0 +1,40 @@
+name: Load Simulation - 30-Min Burst Every 30 Min
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'          # Every 30 minutes (00 and 30 past the hour, UTC)
+
+  workflow_dispatch:                # Lets you test manually from GitHub UI
+
+jobs:
+  simulation:
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 30               # Job auto-kills after exactly 30 minutes
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run load simulation
+        run: python sig_concurrency.py   # ← your script filename
+
+      # Optional: save output if script writes to files
+      - name: Upload any output files (if created)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: simulation-output
+          path: |
+            *.log
+            *.txt
